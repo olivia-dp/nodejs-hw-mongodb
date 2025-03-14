@@ -1,9 +1,38 @@
 import Contact from '../contactSchema.js';
 
-export const getContacts = async () => {
+export const getContacts = async ({ page, perPage, sortBy, sortOrder, filter }) => {
   try {
-    const contacts = await Contact.find();
-    return contacts;
+    const skip = page > 0 ? (page - 1) * perPage : 0;
+    const contactQuery = Contact.find();
+
+    if (filter.contactType) {
+      contactQuery.where('contactType').equals(filter.contactType);
+    }
+
+    if (filter.isFavourite) {
+      contactQuery.where('isFavourite').equals(filter.isFavourite);
+    }
+
+    const [totalItems, contacts] = await Promise.all([
+      Contact.countDocuments(contactQuery),
+      contactQuery
+        .sort({ [sortBy]: sortOrder })
+        .skip(skip)
+        .limit(perPage),
+    ]);
+
+    const totalPages = Math.ceil(totalItems / perPage);
+
+    return {
+      contacts,
+      page,
+      perPage,
+      totalItems,
+      totalPages,
+      hasPreviousPage: page > 1,
+      hasNextPage: totalPages > page,
+    };
+      
   } catch (error) {
     console.log(error.message);
   }
