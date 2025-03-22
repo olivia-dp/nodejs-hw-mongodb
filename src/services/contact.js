@@ -1,9 +1,9 @@
-import Contact from '../contactSchema.js';
+import Contact from '../models/contactSchema.js';
 
-export const getContacts = async ({ page, perPage, sortBy, sortOrder, filter }) => {
+export const getContacts = async ({ page, perPage, sortBy, sortOrder, filter, userId }) => {
   try {
     const skip = page > 0 ? (page - 1) * perPage : 0;
-    const contactQuery = Contact.find();
+    const contactQuery = Contact.find().where('userId').equals(userId);
 
     if (filter.contactType) {
       contactQuery.where('contactType').equals(filter.contactType);
@@ -38,19 +38,20 @@ export const getContacts = async ({ page, perPage, sortBy, sortOrder, filter }) 
   }
 };
 
-export const getContactById = async (id) => {
+export const getContactById = async (id, userId) => {
   try {
-    const contact = await Contact.findById(id);
+    const contact = await await Contact.findOne({ _id: id, userId });
     return contact;
   } catch (error) {
     console.log(error.message);
   }
 };
 
-export const deleteContact = async (id) => {
+export const deleteContact = async (id, userId) => {
   try {
     const contact = await Contact.findByIdAndDelete({
       _id: id,
+      userId
     });
     return contact;
   } catch (error) {
@@ -67,15 +68,19 @@ export const createContact = async (payload) => {
   }
 };
 
-export const updateContact = async (id, payload, options = {}) => {
-  const result = await Contact.findOneAndUpdate({ _id: id }, payload, {
-    new: true,
-    includeResultMetadata: true,
-    ...options,
-  });
-  if (!result || !result.value) return null;
+export const updateContact = async (id, payload, userId) => {
+  try {
+    const contact = await Contact.findOneAndUpdate(
+      { _id: id, userId }, 
+      payload,
+      { new: true }
+    );
 
-  return {
-    contact: result.value,
-  };
+    if (!contact) return null;
+
+    return contact;
+  } catch (error) {
+    console.error('Error in updateContact:', error.message);
+    throw error;
+  }
 };
