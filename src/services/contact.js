@@ -49,7 +49,7 @@ export const getContactById = async (id, userId) => {
 
 export const deleteContact = async (id, userId) => {
   try {
-    const contact = await Contact.findByIdAndDelete({
+    const contact = await Contact.findOneAndDelete({
       _id: id,
       userId
     });
