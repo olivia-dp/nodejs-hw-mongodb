@@ -9,6 +9,7 @@ import {
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 export const getContactsController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
@@ -60,8 +61,10 @@ export const createNewContactController = async (req, res) => {
   const contact = {
     ...req.body,
     userId: req.user.id,
-  }
-  
+  };
+
+  const photo = req.file;
+
   const result = await createContact(contact);
 
   res.status(201).json({
@@ -73,8 +76,17 @@ export const createNewContactController = async (req, res) => {
 
 export const patchContactController = async (req, res) => {
   const { id } = req.params;
+  const photo = req.file;
 
-  const contact = await updateContact(id, req.body, req.user.id);
+  let photoUrl;
+  if (photo) {
+    photoUrl = await saveFileToCloudinary(photo);
+  }
+
+  const contact = await updateContact(id, req.user.id, {
+    ...req.body,
+    photo: photoUrl,
+  });
 
   if (!contact) {
     throw createHttpError(404, 'Contact not found');
