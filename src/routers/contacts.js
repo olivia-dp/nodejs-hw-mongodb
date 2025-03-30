@@ -27,16 +27,16 @@ router.delete('/:id', isValidId, ctrlWrapper(deleteContactController));
 
 router.post(
   '/',
-  validateBody(createContactSchema),
   upload.single('photo'),
+  validateBody(createContactSchema),
   ctrlWrapper(createNewContactController),
 );
 
 router.patch(
   '/:id',
   isValidId,
-  validateBody(updateContactSchema),
   upload.single('photo'),
+  validateBody(updateContactSchema),
   ctrlWrapper(patchContactController),
 );
 
