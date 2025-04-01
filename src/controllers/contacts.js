@@ -95,12 +95,14 @@ export const patchContactController = async (req, res) => {
     } else {
       photoUrl = await saveFileToUploadDir(photo);
     }
-  }
+  };
 
   const contact = await updateContact(id, req.user.id, {
     ...req.body,
     photo: photoUrl,
   });
+
+  
 
   if (!contact) {
     throw createHttpError(404, 'Contact not found');
