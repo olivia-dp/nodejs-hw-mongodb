@@ -6,20 +6,26 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description:
-    <опис вашого додатку>
+    Documentation for a contacts app
 tags:
   - name: Contacts
     description: Operations about contacts.
 servers:
-  - url: http://localhost:3000
+  - url: http://127.0.0.1:3000
   - url: https://contacts-app-r1ls.onrender.com
 paths:
   /contacts:
     get: 
       $ref: ../swagger/path/contacts/get.yaml
+    post: 
+      $ref: ../swagger/path/contacts/post.yaml
   /contacts/{id}:
     get:
       $ref: ../swagger/path/contacts/{id}/get.yaml
+    patch: 
+      $ref: ../swagger/path/contacts/{id}/patch.yaml
+    delete: 
+      $ref: ../swagger/path/contacts/{id}/delete.yaml
 components:
   securitySchemes:
     bearerAuth:
