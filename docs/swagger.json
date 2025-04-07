@@ -79,7 +79,7 @@
             "in": "query",
             "name": "filter",
             "schema": {
-              "type": "boolean",
+              "type": "string",
               "example": true
             }
           }
@@ -248,6 +248,92 @@
                     },
                     "data": {
                       "$ref": "#/components/schemas/contact"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "BadRequestError"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "message",
+                        "errors"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Bad Request"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "message",
+                              "path",
+                              "type",
+                              "context"
+                            ],
+                            "properties": {
+                              "message": {
+                                "type": "string",
+                                "example": "\"phoneNumber\" is required"
+                              },
+                              "path": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "example": [
+                                  "phoneNumber"
+                                ]
+                              },
+                              "type": {
+                                "type": "string",
+                                "example": "any.required"
+                              },
+                              "context": {
+                                "type": "object",
+                                "required": [
+                                  "label",
+                                  "key"
+                                ],
+                                "properties": {
+                                  "label": {
+                                    "type": "string",
+                                    "example": "phoneNumber"
+                                  },
+                                  "key": {
+                                    "type": "string",
+                                    "example": "phoneNumber"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 }
@@ -425,6 +511,92 @@
               }
             }
           },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 400
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "BadRequestError"
+                    },
+                    "data": {
+                      "type": "object",
+                      "required": [
+                        "message",
+                        "errors"
+                      ],
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "Bad Request"
+                        },
+                        "errors": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "required": [
+                              "message",
+                              "path",
+                              "type",
+                              "context"
+                            ],
+                            "properties": {
+                              "message": {
+                                "type": "string",
+                                "example": "\"phoneNumber\" is required"
+                              },
+                              "path": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                },
+                                "example": [
+                                  "phoneNumber"
+                                ]
+                              },
+                              "type": {
+                                "type": "string",
+                                "example": "any.required"
+                              },
+                              "context": {
+                                "type": "object",
+                                "required": [
+                                  "label",
+                                  "key"
+                                ],
+                                "properties": {
+                                  "label": {
+                                    "type": "string",
+                                    "example": "phoneNumber"
+                                  },
+                                  "key": {
+                                    "type": "string",
+                                    "example": "phoneNumber"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
           "401": {
             "$ref": "#/components/responses/401"
           },
@@ -534,7 +706,7 @@
             "type": "boolean",
             "example": true
           },
-          "contatctType": {
+          "contactType": {
             "description": "Type of contact",
             "type": "string",
             "enum": [
