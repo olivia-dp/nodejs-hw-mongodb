@@ -31,7 +31,7 @@ parameters:
   - in: query
     name: filter
     schema:
-      type: boolean
+      type: string
       example: true
 responses:
   '200':

@@ -25,7 +25,7 @@ properties:
     description: "Favourite contact"
     type: boolean
     example: true
-  contatctType:
+  contactType:
     description: 'Type of contact'
     type: string
     enum: ['work', 'home', 'personal']
