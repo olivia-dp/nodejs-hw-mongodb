@@ -80,6 +80,10 @@
             "name": "filter",
             "schema": {
               "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ],
               "example": true
             }
           }
@@ -678,7 +682,8 @@
           "_id",
           "name",
           "phoneNumber",
-          "contactType"
+          "contactType",
+          "userId"
         ],
         "properties": {
           "_id": {

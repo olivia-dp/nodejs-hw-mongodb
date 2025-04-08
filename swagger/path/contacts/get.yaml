@@ -32,6 +32,7 @@ parameters:
     name: filter
     schema:
       type: string
+      enum: ['true', 'false']
       example: true
 responses:
   '200':
