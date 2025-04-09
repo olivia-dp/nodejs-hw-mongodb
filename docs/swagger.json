@@ -59,9 +59,9 @@
             "name": "sortBy",
             "schema": {
               "type": "string",
-              "example": "contactType"
-            },
-            "description": "_id, name, contactType, createdAt fields can be mentioned. Default value - _id"
+              "example": "contactType",
+              "description": "_id, name, contactType, createdAt fields can be mentioned. Default value - _id"
+            }
           },
           {
             "in": "query",
@@ -77,14 +77,29 @@
           },
           {
             "in": "query",
-            "name": "filter",
+            "name": "contactType",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "work",
+                "home",
+                "personal"
+              ],
+              "example": "personal",
+              "description": "filter by contactType value"
+            }
+          },
+          {
+            "in": "query",
+            "name": "isFavourite",
             "schema": {
               "type": "string",
               "enum": [
                 "true",
                 "false"
               ],
-              "example": true
+              "example": "true",
+              "description": "filter favourite contacts"
             }
           }
         ],
